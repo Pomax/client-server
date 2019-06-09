@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "socket.io": "^2.2.0"
+  },
+  "scripts": {
+    "client": "node src/client/app.js",
+    "server": "node src/server/app.js"
+  }
+}
