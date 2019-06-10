@@ -1,5 +1,28 @@
+/**
+ * This function takes a standard Socket.io socket,
+ * and makes it better by rewriting the `on` and `emit`
+ * functions so that they can autorespond, and be used
+ * with `await`, respectively. This means you can write
+ * code like this:
+ *
+ *   let data = socket.emit('get-me-stuff', input);
+ *   handleResult(data);
+ *
+ * as well as this:
+ *
+ *   socket.on('get-me-stuff', (input, respond) => {
+ *     let output = formOutput(input);
+ *     respond(output);
+ *   })
+ *
+ * And that's just so much nicer than plain Socket.io
+ */
 function upgradeSocket(socket) {
 
+  // don't upgrade an already-upgraded socket
+  if (socket.__upgraded) return socket;
+
+  // original functions
   const __emit = socket.emit.bind(socket);
   const __on = socket.on.bind(socket);
 
@@ -64,6 +87,8 @@ function upgradeSocket(socket) {
       });
     });
   };
+
+  socket.__upgraded = true;
 
   return socket;
 };

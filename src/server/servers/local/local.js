@@ -6,6 +6,7 @@ const socketServer = require("./socket/socket-server.js");
 
 module.exports = {
   start: () => {
+    // Start the socket server first...
     socketServer.listen(0, () => {
       const socketServerPort = socketServer.address().port;
 
@@ -13,6 +14,7 @@ module.exports = {
         `Start game host administrative socket server on http://localhost:${socketServerPort}`
       );
 
+      // And if that succeeded, start the web server that'll grant access to the socket server.
       webServer.start(socketServerPort, port =>
         console.log(
           `Start game host administrative web server on http://localhost:${port}`

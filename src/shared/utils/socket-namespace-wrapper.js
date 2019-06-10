@@ -1,3 +1,5 @@
+const upgradeSocket = require("./upgrade-socket.js");
+
 /**
  * This is a utility function that binds APIs to sockets,
  * in a way that allows users to write "what needs to exist"
@@ -45,6 +47,8 @@
  *
  */
 function wrap(socket, namespace, config) {
+  upgradeSocket(socket);
+
   const API = config.API || config;
   const exceptions = config.exceptions || [];
 

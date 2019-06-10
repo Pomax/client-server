@@ -1,3 +1,5 @@
+// A simple module for resolving file types to web content types
+
 const CONTENT_TYPES = {
   ".html": `text/html`,
   ".js": `application/javascript`,

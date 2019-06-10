@@ -1,19 +1,16 @@
+// Set up the core socket server for talking directly
+// to the game engine. This is what clients connect to.
 const gameSocketServer = require("http").Server();
 const io = require("socket.io")(gameSocketServer);
+const API = require("../../../API");
 
-const upgradeSocket = require("../../../shared/utils/upgrade-socket.js");
-const wrap = require("../../../shared/utils/socket-namespace-wrapper.js");
+// This is our "hub", which manages clients (dis)connecting.
+const users = require("./users.js");
 
-const { UserAPI, ConnectionAPI } = require("../../../API");
-const users = require('./users.js')
-
-io.on(`connection`, client => {
+io.on(`connection`, serverClient => {
   console.log(`client connected to server`);
-  upgradeSocket(client);
-
   const sharedState = { users };
-  wrap(client, UserAPI.namespace, UserAPI.server)(sharedState);
-  wrap(client, ConnectionAPI.namespace, ConnectionAPI.server)(sharedState);
+  API.setup(serverClient, `server`, sharedState);
 });
 
 module.exports = {
@@ -26,10 +23,3 @@ module.exports = {
     );
   }
 };
-
-/*
-  gamehub:
-  - usermanager
-  - register = usermanager.add(user)
-  - unregister = usermanager.remove(user)
-*/

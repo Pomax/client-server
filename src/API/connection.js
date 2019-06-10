@@ -1,6 +1,11 @@
-module.exports = {
+/**
+ * This is the API that deals with the basics of socket connections.
+ */
+const ConnectionAPI = {
   namespace: false,
 
+  // For clients, we just want to know when connect/disconnect has
+  // happened, and whether or not the server is reachable at all.
   client: {
     connect_error: () => {
       console.log(`Server unavailable`);
@@ -16,6 +21,8 @@ module.exports = {
     }
   },
 
+  // For clients, we just want to know when connect/disconnect has
+  // happened, and whether or not the server is reachable at all.
   server: {
     disconnect: function() {
       const { users } = this.state;
@@ -32,3 +39,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = ConnectionAPI;

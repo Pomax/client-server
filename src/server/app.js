@@ -1,3 +1,4 @@
+// shim console.log to include a sequencing of sorts.
 require('../shared/utils/sequenced-console-log.js');
 
 // Set up a game host - this part has to happen.

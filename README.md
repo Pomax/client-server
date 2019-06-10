@@ -1,8 +1,8 @@
 # A distributed client-server implementation with browser interfacing
 
-This is a distributed client-server implementation where the client <-> server communication is handled through a (real-time) websocket, and both the client and server themselves run a pair of web+socket servers for local access.
+This is a distributed client-server implementation where the client <-> server communication is handled through a (real-time) websocket, and both the client and server themselves run a pair of web+socket servers for local access. The "distributed" is fully committed to: not only do clients and servers not need to run on the same machine, the client doesn't even need to run on the same machine that an actual human user is on.
 
-This means that in a minimal setup, there are four servers running:
+In a minimal setup, there are five TCP/UDP-based servers running:
 
 ## The Server Component
 
@@ -66,3 +66,32 @@ This shows the two servers that are running, each on their own port:
 - the socket server is the real-time component for the browser based interaction
 
 It also shows that a connection was made to the game host.
+
+## A diagram of the setup
+
+```
+
+       ┌ local web server (used to serve the page the browser needs to start a socket connection).
+       ├ local socket server (actually handles the browser interaction).
+Server ┤          ↕
+       └ socket server for the game engine, handling external client connections.
+                  ⇮
+----------------  ║  ----------------------------------------------------------------------------
+                  ⇩
+       ┌ socket client, for talking to the game engine.
+Client ┤          ↕
+       ├ local socket server (actually handles the browser interaction).
+       └ local web server (used to serve the page the browser needs to start a socket connection).
+```
+
+## Term clarification:
+
+- **server** is the game engine. It is the "game server".
+- **client** is any game client. It registers with, and talks to, the game server.
+- **user** is a human interacting with this system through a browser.
+
+It might be confusing to read about "a server" that is also actually three servers, but I make no apologies for that. Terminology is always an issue. As a summary:
+
+- The "game server" consists of two socket servers, a web server, and a game engine.
+- The "game client" consists of a socket server, a web server, a connection to the game server, and passthrough logic.
+- A "user" consists of a webpage running in a browser, with a socket connection to the client.

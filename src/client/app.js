@@ -1,3 +1,4 @@
+// shim console.log to include a sequencing of sorts.
 require("../shared/utils/sequenced-console-log.js");
 
 // Set up a web server for _loading_ the browser-based game host administration page
