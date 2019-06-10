@@ -14,6 +14,9 @@ module.exports = function sanitizeLocation(location, rootDir, publicDir) {
   // the socket upgrade gets pulled from the utils dir
   if (location === `/wrap-socket.js`) return join(rootDir, `src`, `shared`, `utils`, `socket-namespace-wrapper.js`);
 
+  // A client-side wrapper for namescaped on/emit
+  if (location === '/ns-wrapped.js') return join(rootDir, `src`, `shared`, `utils`, `web`, `ns-wrapped.js`);
+
   // everything else is a static asset and we sanitize it.
   location = location.substring(1);
   location = location.replace(/\.\./g, ``).replace(/\/\//g, `/`);
