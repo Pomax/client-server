@@ -11,13 +11,13 @@ class User extends NSWrapped {
 
   // Get our name from the client.
   getName() {
-    return this.send(`get-name`);
+    return this.send(`get_name`);
   }
 
   // Set our name, and notify the client of this face.
   setName(name) {
     this.name = name;
-    return this.send(`set-name`, { name });
+    return this.send(`set_name`, { name });
   }
 
   // Render this user, which is a bit hacky atm

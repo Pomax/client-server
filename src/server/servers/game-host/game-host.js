@@ -10,7 +10,7 @@ const users = require("./users.js");
 io.on(`connection`, serverClient => {
   console.log(`client connected to server`);
   const sharedState = { users };
-  API.setup(serverClient, `server`, sharedState);
+  API.server.setup(serverClient, sharedState);
 });
 
 module.exports = {

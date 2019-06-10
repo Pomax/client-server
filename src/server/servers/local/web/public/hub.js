@@ -11,8 +11,8 @@ class Hub extends NSWrapped {
     }
 
     listen() {
-      this.on("user-added", user => this.addUser(user));
-      this.on("user-removed", user => this.removeUser(user));
+      this.on("user_added", user => this.addUser(user));
+      this.on("user_removed", user => this.removeUser(user));
     }
 
     async getCurrentList() {
