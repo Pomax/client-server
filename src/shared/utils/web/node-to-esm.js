@@ -9,8 +9,8 @@ module.exports = function nodeToESM(location, content, socketServerPort) {
     content = content
       .toString()
       .replace(
-        `io("http://localhost:8080");`,
-        `io("http://localhost:${socketServerPort}");`
+        `http://localhost:8080`,
+        `http://localhost:${socketServerPort}`
       );
   }
 

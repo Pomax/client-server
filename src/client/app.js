@@ -1,10 +1,10 @@
 // shim console.log to include a sequencing of sorts.
 require("../shared/utils/sequenced-console-log.js");
 
-// Set up a web server for _loading_ the browser-based game host administration page
+// Set up a web server for _loading_ the browser-based client UI
 const webServer = require("./servers/web/web-server.js");
 
-// Set up a socket server for _handling_ the browser-based game host administration
+// Set up a socket server for _handling_ the browser-based client UI
 const socketServer = require("./servers/socket/socket-server.js");
 
 socketServer.listen(0, () => {

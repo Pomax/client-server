@@ -1,37 +1,29 @@
+import User from "./user.js";
 import upgradeSocket from "./upgrade-socket.js";
 
-// connect to the client's local socket server for real-time data exchange.
-const socket = io("http://localhost:8080");
+// Connect to the client's local socket server for real-time data exchange.
+const socket = upgradeSocket(io("http://localhost:8080"));
 
-upgradeSocket(socket);
+// Construct a user representation.
+const user = new User(socket);
 
-const user = {};
-
-const renderUserName = () => {
-  let name = user.name;
-  let nameElement = document.getElementById("user-name");
-  nameElement.textContent = ` - (${name})`;
-};
-
+// Start things off making sure we have a name.
 const start = async () => {
-  //  // set up listening
-  //  socket.on("user-added", user => userlist.addUser(user));
-  //  socket.on("user-removed", user => userlist.removeUser(user));
+  let name = await user.getName();
 
-  // ask the server for the userlist
-  let name = await socket.emit("user:get-name");
-
+  // If we have one, we're done.
   if (name) {
     user.name = name;
-    renderUserName();
-  } else {
-    let name = prompt("name?");
-    let confirm = await socket.emit("user:set-name", { name });
+    user.render();
+  }
 
+  // If we don't, have the user specify one.
+  else {
+    let name = prompt("name?");
+    let confirm = await user.setName(name);
     if (confirm) {
       console.log("name acknowledged");
-      user.name = name;
-      renderUserName();
+      user.render();
     } else {
       console.log("oh no, name was not acknowledged O_O");
     }

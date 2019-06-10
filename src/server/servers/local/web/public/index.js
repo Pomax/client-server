@@ -1,13 +1,12 @@
 import upgradeSocket from "./upgrade-socket.js";
 import UserListing from "./user-listing.js";
 const userlist = new UserListing();
+
 document.body.append(userlist.el);
 
 // connect to the server's local socket server for
 // real time data exchange.
-const socket = io("http://localhost:8080");
-
-upgradeSocket(socket);
+const socket = upgradeSocket(io("http://localhost:8080"));
 
 const start = async () => {
   // set up listening
