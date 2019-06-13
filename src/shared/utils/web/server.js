@@ -13,7 +13,9 @@ module.exports = function setupServer(publicDir) {
   return {
     start: (port, whenStarted) => {
       const webServer = http.Server((request, response) => {
+        port = webServer.address().port;
         var location = sanitizeLocation(request.url, process.cwd(), publicDir);
+
 
         // server content from the filesystem as appropriate
         fs.readFile(location, (error, content) => {
@@ -27,10 +29,11 @@ module.exports = function setupServer(publicDir) {
         });
       });
 
-      // open a server with port 0, which makes it pick "whatever port is available".
-      webServer.listen(0, () =>
+      webServer.listen(port, () =>
         whenStarted(webServer.address().port)
       );
+
+      return webServer;
     }
   };
 };

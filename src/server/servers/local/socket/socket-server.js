@@ -1,7 +1,14 @@
 // Set up the socket server for real-time communication about the state
 // of the game host without interfering with the actual game host work.
-const administrativeSocketServer = require("http").Server();
-const io = require("socket.io")(administrativeSocketServer);
+const administrativeServer = require('../web/web-server.js');
+const administrativeServerPort = 0;
+const server = administrativeServer.start(administrativeServerPort, (port) => {
+  console.log(
+    `Start administrative server on http://localhost:${port}`
+  );
+});
+
+const io = require("socket.io")(server);
 const API = require("./API");
 const { users } = require("../../game-host/game-host.js");
 
@@ -19,4 +26,4 @@ io.on(`connection`, admin => {
   });
 });
 
-module.exports = administrativeSocketServer;
+module.exports = administrativeServer;

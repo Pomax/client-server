@@ -19,11 +19,10 @@ Run `npm run server and you should be presented with the following output:
 > node src/server/app.js
 
 [1] Start game host on http://localhost:56581
-[1] Start game host administrative socket server on http://localhost:56582
-[1] Start game host administrative web server on http://localhost:56583
+[1] Start administrative socket server on http://localhost:56582
 ```
 
-This shows the three servers that are running, each on their own port:
+This shows the three servers that are running (one socket server, and one combined web+socket server), each on their own port:
 
 - the game host is what the client connects to
 - the administrative web server is what admins can load up in their browser
@@ -55,12 +54,11 @@ You should be presented with the following output:
 > @ client [...]client-server
 > node src/client/app.js "56581"
 
-[1] Start client socket server on http://localhost:57647
-[1] Start client web server on http://localhost:57648
+[1] Start client server on http://localhost:57647
 [1] client connected
 ```
 
-This shows the two servers that are running, each on their own port:
+This shows the two servers that are running, on the same port:
 
 - the web server is what a user can load up in their browser
 - the socket server is the real-time component for the browser based interaction

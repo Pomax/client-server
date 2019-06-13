@@ -8,8 +8,15 @@ const gameHost = require(`socket.io-client`)(gameHostURL);
 wrap(gameHost, ConnectionAPI.namespace, ConnectionAPI.client);
 
 // And set up a socket _server_ for the user to connect to.
-const clientSocketServer = require("http").Server();
-const io = require("socket.io")(clientSocketServer);
+const clientServer = require('../web/web-server.js');
+const clientServerPort = 0;
+const server = clientServer.start(clientServerPort, (port) => {
+  console.log(
+    `Start client server on http://localhost:${port}`
+  );
+})
+
+const io = require("socket.io")(server);
 
 // Set up this client's user representation
 // (of which there can only be one, of course);
@@ -27,4 +34,4 @@ io.on(`connection`, client => {
 // issues a kill/ctrl-c etc. for the server.
 beforeSIGINT(() => gameHost.disconnect());
 
-module.exports = clientSocketServer;
+module.exports = clientServer;
