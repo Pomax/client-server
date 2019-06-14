@@ -9,12 +9,11 @@ const generate404 = require("./404.js");
 const nodeToESM = require("./node-to-esm.js");
 
 // Generator - needs to know which public dir to serve static content from
-module.exports = function setupServer(publicDir) {
+module.exports = function setupServer(rootDir) {
   return {
     start: (port, whenStarted) => {
       const webServer = http.Server((request, response) => {
-        port = webServer.address().port;
-        var location = sanitizeLocation(request.url, process.cwd(), publicDir);
+        var location = sanitizeLocation(request.url, process.cwd(), rootDir);
 
 
         // server content from the filesystem as appropriate
@@ -23,7 +22,7 @@ module.exports = function setupServer(publicDir) {
 
           // Some files are used both node-side and browser-side, and so need
           // a bit of rewriting to make sure they work for the browser.
-          content = nodeToESM(location, content, port);
+          content = nodeToESM(location, content);
           response.writeHead(200, { "Content-Type": getContentType(location) });
           response.end(content, `utf-8`);
         });

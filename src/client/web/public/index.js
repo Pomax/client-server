@@ -2,7 +2,7 @@ import User from "./user.js";
 import upgradeSocket from "./upgrade-socket.js";
 
 // Connect to the client's local socket server for real-time data exchange.
-const socket = upgradeSocket(io("http://localhost:8080"));
+const socket = upgradeSocket(io(window.location.toString()));
 
 // Construct a user representation.
 const user = new User(socket);

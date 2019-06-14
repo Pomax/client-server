@@ -1,4 +1,4 @@
-const wrap = require("../../../../../shared/utils/socket-namespace-wrapper.js");
+const wrap = require("../../../../shared/utils/socket-namespace-wrapper.js");
 
 const API = {
   GameHubAPI: require('./game-hub.js')

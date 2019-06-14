@@ -13,13 +13,13 @@ io.on(`connection`, serverClient => {
   API.setup(serverClient, `server`, sharedState);
 });
 
+gameSocketServer.listen(0, () =>
+  console.log(
+    `Started game host on port ${gameSocketServer.address().port}`
+  )
+);
+
 module.exports = {
   users: users,
-  start: () => {
-    gameSocketServer.listen(0, () =>
-      console.log(
-        `Start game host on http://localhost:${gameSocketServer.address().port}`
-      )
-    );
-  }
+  server: gameSocketServer
 };

@@ -18,7 +18,7 @@ Run `npm run server and you should be presented with the following output:
 > @ server [...]client-server
 > node src/server/app.js
 
-[1] Start game host on http://localhost:56581
+[1] Started game host on port 56581
 [1] Start administrative socket server on http://localhost:56582
 ```
 
@@ -39,7 +39,7 @@ The client also runs a second socket server for real-time interaction by a _user
 Run `npm run client -- PORT_NUMBER` with the `PORT_NUMBER` replaced by the port number used byt the game host. For example, if the server showed:
 
 ```
-Start game host on http://localhost:56581
+Started game host on port 56581
 ```
 
 Then the run command would be
@@ -54,7 +54,7 @@ You should be presented with the following output:
 > @ client [...]client-server
 > node src/client/app.js "56581"
 
-[1] Start client server on http://localhost:57647
+[1] Started client server on http://localhost:57647
 [1] client connected
 ```
 
@@ -63,7 +63,14 @@ This shows the two servers that are running, on the same port:
 - the web server is what a user can load up in their browser
 - the socket server is the real-time component for the browser based interaction
 
-It also shows that a connection was made to the game host.
+It also shows that a connection was made to the game host, with
+the server showing a corresponding connection:
+
+```
+[1] Started game host on port 56581
+[1] Started administrative server on http://localhost:56582
+[72] client connected to server
+```
 
 ## A diagram of the setup
 
